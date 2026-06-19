@@ -1,14 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
+import { cars } from '../data';
 
 @Controller('cars')
 export class CarsController {
   @Get()
-  onGetCars() {
-    return 'There you go, all the cars.';
+  getAllCars() {
+    return cars;
   }
 
   @Get('/:id')
-  getSingleCarById() {
-    return 'There you go, a single car.';
+  getSingleCarById(@Param('id') id: string) {
+    return cars[id];
   }
 }
