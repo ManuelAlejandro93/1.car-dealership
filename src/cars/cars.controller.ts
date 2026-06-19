@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { CarService } from './cars.service';
 import type { SingleCarInterface } from '../interfaces';
 import { CarErrors } from '../handlers';
@@ -12,10 +12,18 @@ export class CarsController {
     return this.carService.findAll();
   }
 
+  // @Get('/:id')
+  // findOneById(@Param('id') id: string): SingleCarInterface {
+  //   const singleCarById =
+  //     this.carService.findAll().find((singleCard) => singleCard.id === +id) ??
+  //     CarErrors.nonExistingCar;
+  //   return singleCarById;
+  // }
+
   @Get('/:id')
-  findOneById(@Param('id') id: string): SingleCarInterface {
+  findOneById(@Param('id', ParseIntPipe) id: number): SingleCarInterface {
     const singleCarById =
-      this.carService.findAll().find((singleCard) => singleCard.id === +id) ??
+      this.carService.findAll().find((singleCard) => singleCard.id === id) ??
       CarErrors.nonExistingCar;
     return singleCarById;
   }
