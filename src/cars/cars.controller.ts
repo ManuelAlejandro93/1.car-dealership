@@ -1,7 +1,12 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { CarService } from './cars.service';
 import type { SingleCarInterface } from '../interfaces';
-import { CarErrors } from '../handlers';
 
 @Controller('cars')
 export class CarsController {
@@ -22,9 +27,14 @@ export class CarsController {
 
   @Get('/:id')
   findOneById(@Param('id', ParseIntPipe) id: number): SingleCarInterface {
-    const singleCarById =
-      this.carService.findAll().find((singleCard) => singleCard.id === id) ??
-      CarErrors.nonExistingCar;
-    return singleCarById;
+    const singleCarById = this.carService
+      .findAll()
+      .find((singleCard) => singleCard.id === id);
+
+    if (singleCarById === undefined) {
+      throw new NotFoundException(`car id:${id} does NOT exist.`);
+    } else {
+      return singleCarById;
+    }
   }
 }
