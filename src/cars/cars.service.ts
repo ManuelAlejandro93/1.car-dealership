@@ -8,7 +8,7 @@ interface SingleCarInterface {
 
 @Injectable()
 export class CarService {
-  public readonly cars: SingleCarInterface[] = [
+  private readonly _cars: SingleCarInterface[] = [
     {
       id: 1,
       brand: 'Chevrolet',
@@ -25,4 +25,12 @@ export class CarService {
       model: 'Jimmy',
     },
   ];
+
+  public get cars(): SingleCarInterface[] {
+    return this._cars;
+  }
+
+  public findAll(): SingleCarInterface[] {
+    return this._cars;
+  }
 }
