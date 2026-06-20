@@ -35,7 +35,6 @@ export class CarsController {
   @Post()
   createCar(@Body() body: SingleCarInterface) {
     console.log(body);
-
     return body;
   }
 }
