@@ -6,6 +6,7 @@ import {
   NotFoundException,
   Param,
   ParseIntPipe,
+  ParseUUIDPipe,
   Patch,
   Post,
   Put,
@@ -25,13 +26,15 @@ export class CarsController {
   }
 
   @Get('/:id')
-  findOneById(@Param('id') incoming_uuid: string): SingleCarInterface {
+  findOneById(
+    @Param('id', ParseUUIDPipe) incoming_uuid: string,
+  ): SingleCarInterface {
     const foundSingleCarInDB: SingleCarInterface | undefined = this.carService
       .findAll()
       .find((singleCardInDB) => singleCardInDB.uuid === incoming_uuid);
 
     if (!foundSingleCarInDB) {
-      throw NotFoundException;
+      throw new NotFoundException(`car with id:${incoming_uuid} not found`);
     } else {
       return foundSingleCarInDB;
     }
@@ -39,7 +42,6 @@ export class CarsController {
 
   @Post()
   createCar(@Body() body: SingleCarInterface) {
-    console.log(body);
     return body;
   }
 
