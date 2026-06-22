@@ -16,6 +16,8 @@ import { CarService } from './cars.service';
 
 import type { SingleCarInterface } from '../interfaces';
 
+import { CreateCarDTO } from './dto';
+
 @Controller('cars')
 export class CarsController {
   constructor(private readonly carService: CarService) {}
@@ -41,8 +43,8 @@ export class CarsController {
   }
 
   @Post()
-  createCar(@Body() body: SingleCarInterface) {
-    return body;
+  createCar(@Body() createCarDTO: CreateCarDTO) {
+    return createCarDTO;
   }
 
   @Patch(':carId')

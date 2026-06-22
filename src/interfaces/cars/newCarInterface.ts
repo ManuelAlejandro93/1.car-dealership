@@ -1,5 +1,4 @@
-export interface newCarInterface {
-  id: number;
-  brand: string;
-  model: string;
+export interface NewCarInterface {
+  readonly brand: string;
+  readonly model: string;
 }
