@@ -1,26 +1,22 @@
 import { Injectable } from '@nestjs/common';
-
-interface SingleCarInterface {
-  id: number;
-  brand: string;
-  model: string;
-}
+import { SingleCarInterface } from '../interfaces';
+import { UuidAdapter } from '../adapters';
 
 @Injectable()
 export class CarService {
   private readonly _cars: SingleCarInterface[] = [
     {
-      id: 1,
+      uuid: UuidAdapter.getANewUUID(),
       brand: 'Chevrolet',
       model: 'Camaro',
     },
     {
-      id: 2,
+      uuid: UuidAdapter.getANewUUID(),
       brand: 'Toyota',
       model: 'Corolla',
     },
     {
-      id: 3,
+      uuid: UuidAdapter.getANewUUID(),
       brand: 'Suzuki',
       model: 'Jimmy',
     },

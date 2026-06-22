@@ -1,0 +1,1 @@
+export { UuidAdapter } from './uuid';

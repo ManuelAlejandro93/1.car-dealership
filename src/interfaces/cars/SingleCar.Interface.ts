@@ -1,5 +1,5 @@
 export interface SingleCarInterface {
-  id: number;
+  uuid: string;
   brand: string;
   model: string;
 }

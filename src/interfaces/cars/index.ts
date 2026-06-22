@@ -1,2 +1,2 @@
-export * from './singleCarInterface';
+export * from './SingleCar.Interface';
 export * from './newCarInterface';
