@@ -25,17 +25,15 @@ export class CarsController {
   }
 
   @Get('/:id')
-  findOneById(
-    @Param('id', ParseIntPipe) incoming_uuid: string,
-  ): SingleCarInterface {
-    const singleCarById = this.carService
+  findOneById(@Param('id') incoming_uuid: string): SingleCarInterface {
+    const foundSingleCarInDB: SingleCarInterface | undefined = this.carService
       .findAll()
-      .find((singleCar) => singleCar.uuid === incoming_uuid);
+      .find((singleCardInDB) => singleCardInDB.uuid === incoming_uuid);
 
-    if (singleCarById === undefined) {
-      throw new NotFoundException(`car id:${incoming_uuid} does NOT exist.`);
+    if (!foundSingleCarInDB) {
+      throw NotFoundException;
     } else {
-      return singleCarById;
+      return foundSingleCarInDB;
     }
   }
 

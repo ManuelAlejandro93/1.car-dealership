@@ -6,7 +6,7 @@ import { UuidAdapter } from '../adapters';
 export class CarService {
   private readonly _cars: SingleCarInterface[] = [
     {
-      uuid: UuidAdapter.getANewUUID(),
+      uuid: 'b749f1ee-1f07-418c-8928-5d4b331eac17',
       brand: 'Chevrolet',
       model: 'Camaro',
     },
