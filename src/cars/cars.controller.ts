@@ -15,9 +15,7 @@ import {
 } from '@nestjs/common';
 
 import { CarService } from './cars.service';
-
 import type { SingleCarInterface } from '../interfaces';
-
 import { CreateCarDTO } from './dto';
 
 @Controller('cars')
