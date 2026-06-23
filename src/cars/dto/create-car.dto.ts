@@ -1,4 +1,4 @@
-import { IsOptional, IsString, IsUUID, Length } from 'class-validator';
+import { IsString, IsUUID, Length } from 'class-validator';
 
 export class CreateCarDTO {
   @IsString({ message: 'Brand Property Error: Please type brand' })
