@@ -43,8 +43,10 @@ export class CarsController {
   }
 
   @Post()
-  createCar(@Body() createCarDTO: CreateCarDTO) {
-    return createCarDTO;
+  createCar(@Body() newCarInfo: CreateCarDTO) {
+    return this.carService.createNewCar(
+      newCarInfo as unknown as SingleCarInterface,
+    );
   }
 
   @Patch(':carId')
