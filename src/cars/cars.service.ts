@@ -22,10 +22,6 @@ export class CarService {
     },
   ];
 
-  public get cars(): SingleCarInterface[] {
-    return this._cars;
-  }
-
   public findAll(): SingleCarInterface[] {
     return this._cars;
   }

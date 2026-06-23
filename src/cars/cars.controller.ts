@@ -19,6 +19,7 @@ import type { SingleCarInterface } from '../interfaces';
 import { CreateCarDTO } from './dto';
 
 @Controller('cars')
+@UsePipes(ValidationPipe)
 export class CarsController {
   constructor(private readonly carService: CarService) {}
 
@@ -36,30 +37,29 @@ export class CarsController {
       .find((singleCardInDB) => singleCardInDB.uuid === incoming_uuid);
 
     if (!foundSingleCarInDB) {
-      throw new NotFoundException(`car with id:${incoming_uuid} not found`);
+      throw new NotFoundException(`car with uuid:${incoming_uuid} not found`);
     } else {
       return foundSingleCarInDB;
     }
   }
 
   @Post()
-  @UsePipes(ValidationPipe)
   createCar(@Body() createCarDTO: CreateCarDTO) {
     return createCarDTO;
   }
 
   @Patch(':carId')
-  updateCar(@Param('carId', ParseIntPipe) carId: number) {
+  updateCar(@Param('carId', ParseUUIDPipe) carId: string) {
     return { status: 'some car, has been updated', carId };
   }
 
   @Put(':carId')
-  replaceFullCar(@Param('carId', ParseIntPipe) carId: number) {
-    return { status: 'some car, has been completely', carId };
+  replaceFullCar(@Param('carId', ParseUUIDPipe) carId: string) {
+    return { status: 'some car, has been completely modified.', carId };
   }
 
   @Delete(':carId')
-  deleteCar(@Param('carId', ParseIntPipe) carId: number) {
+  deleteCar(@Param('carId', ParseUUIDPipe) carId: string) {
     return {
       status: 'a car has been deleted',
       carId,
