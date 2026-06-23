@@ -19,7 +19,6 @@ import type { SingleCarInterface } from '../interfaces';
 import { CreateCarDTO } from './dto';
 
 @Controller('cars')
-@UsePipes(ValidationPipe)
 export class CarsController {
   constructor(private readonly carService: CarService) {}
 
