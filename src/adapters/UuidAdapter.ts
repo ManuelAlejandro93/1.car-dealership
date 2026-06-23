@@ -1,5 +1,5 @@
 export class UuidAdapter {
-  public static getANewUUID() {
+  public static getANewUUID(): string {
     return crypto.randomUUID();
   }
 }

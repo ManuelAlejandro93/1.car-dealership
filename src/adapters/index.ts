@@ -1,1 +1,1 @@
-export { UuidAdapter } from './uuid';
+export { UuidAdapter } from './UuidAdapter';
