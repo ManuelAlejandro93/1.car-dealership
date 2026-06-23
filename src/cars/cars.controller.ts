@@ -10,6 +10,8 @@ import {
   Patch,
   Post,
   Put,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 
 import { CarService } from './cars.service';
@@ -43,6 +45,7 @@ export class CarsController {
   }
 
   @Post()
+  @UsePipes(ValidationPipe)
   createCar(@Body() createCarDTO: CreateCarDTO) {
     return createCarDTO;
   }
