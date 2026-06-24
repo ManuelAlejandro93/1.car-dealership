@@ -1,13 +1,7 @@
-import {
-  BadRequestException,
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { SingleCarInterface } from '../interfaces';
 import { cars } from '../data';
 import { UuidAdapter } from '../adapters';
-import { CreateCarDTO } from './dto';
 import { CarValidations } from './validators';
 
 @Injectable()
@@ -29,7 +23,7 @@ export class CarService {
       this._cars.push(newCar);
       return this._cars[this._cars.length - 1];
     } else {
-      throw new ConflictException('Perrito esto está, repetido.');
+      throw new ConflictException('This car is already in inside the DB');
     }
   }
 }
