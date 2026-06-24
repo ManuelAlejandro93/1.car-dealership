@@ -1,15 +1,17 @@
-import { IsOptional, IsString, IsUUID, Length } from 'class-validator';
+import { IsNotEmpty, IsString, IsUUID, Length } from 'class-validator';
 
-export class SingleCarDTO {
+export class CarDTO {
   @IsString({ message: 'Brand Property Error: Please type brand' })
-  @Length(3)
+  @IsNotEmpty()
+  @Length(3, 50)
   brand;
 
   @IsString({ message: 'Model Property Error: Please type model' })
+  @IsNotEmpty()
   @Length(3)
   model;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsUUID('4')
   uuid;
 }
