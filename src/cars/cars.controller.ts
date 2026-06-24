@@ -16,7 +16,8 @@ import {
 
 import { CarService } from './cars.service';
 import type { SingleCarInterface } from '../interfaces';
-import { CreateCarDTO } from './dto';
+import { CreateCarDTO, UpdateCarDTO } from './dto';
+import { CarsDB } from '../data';
 
 @Controller('cars')
 export class CarsController {
@@ -50,8 +51,16 @@ export class CarsController {
   }
 
   @Patch(':carId')
-  updateCar(@Param('carId', ParseUUIDPipe) carId: string) {
-    return { status: 'some car, has been updated', carId };
+  updateCar(
+    @Param('carId', ParseUUIDPipe) carId: string,
+    @Body() updatedCarBody: UpdateCarDTO,
+  ) {
+    return {};
+
+    // this.carService.updateCarData(newUpdatedCar);
+    // return CarsDB.cars.find(
+    //   (singleCar) => singleCar.uuid === carId,
+    // ) as SingleCarInterface;
   }
 
   @Put(':carId')

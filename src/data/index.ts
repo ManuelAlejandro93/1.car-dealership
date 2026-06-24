@@ -1,1 +1,1 @@
-export { cars } from './cars';
+export { CarsDB } from './cars';

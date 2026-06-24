@@ -1,12 +1,13 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { SingleCarInterface } from '../interfaces';
-import { cars } from '../data';
+import { CarsDB } from '../data';
 import { UuidAdapter } from '../adapters';
 import { CarValidations } from './validators';
+import { UpdateCarDTO } from './dto';
 
 @Injectable()
 export class CarService {
-  private _cars: SingleCarInterface[] = cars;
+  private _cars: SingleCarInterface[] = CarsDB.cars;
 
   public findAll(): SingleCarInterface[] {
     return this._cars;
@@ -25,5 +26,17 @@ export class CarService {
     } else {
       throw new ConflictException('This car is already in inside the DB');
     }
+  }
+
+  public updateCarData(newCar: SingleCarInterface) {
+    const newCarArray: SingleCarInterface[] = this._cars.map((singleCar) => {
+      if (singleCar.uuid === newCar.uuid) {
+        return newCar;
+      } else {
+        singleCar;
+      }
+    }) as SingleCarInterface[];
+
+    this._cars = newCarArray as SingleCarInterface[];
   }
 }

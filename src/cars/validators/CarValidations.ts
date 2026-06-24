@@ -1,9 +1,11 @@
 import { SingleCarInterface } from '../../interfaces';
-import { cars } from '../../data';
+import { CarsDB } from '../../data';
 
 export class CarValidations {
+  private static carsDB = CarsDB.cars;
+
   public static isNewCarRepeatedDB = (newCar: SingleCarInterface): boolean => {
-    const isNewCarDB: SingleCarInterface | undefined = cars.find(
+    const isNewCarDB: SingleCarInterface | undefined = this.carsDB.find(
       (singleCarDB) =>
         singleCarDB.brand === newCar.brand &&
         singleCarDB.model === newCar.model,
