@@ -1,8 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { SingleCarInterface } from '../interfaces';
 import { cars } from '../data';
 import { UuidAdapter } from '../adapters';
 import { CreateCarDTO } from './dto';
+import { CarValidations } from './validators';
 
 @Injectable()
 export class CarService {
@@ -16,7 +22,14 @@ export class CarService {
     if (!newCar.uuid) {
       newCar.uuid = UuidAdapter.getANewUUID();
     }
-    this._cars.push(newCar);
-    return this._cars[this._cars.length - 1];
+
+    const isNewCarInDB: boolean = CarValidations.isNewCarRepeatedDB(newCar);
+
+    if (!isNewCarInDB) {
+      this._cars.push(newCar);
+      return this._cars[this._cars.length - 1];
+    } else {
+      throw new ConflictException('Perrito esto está, repetido.');
+    }
   }
 }
