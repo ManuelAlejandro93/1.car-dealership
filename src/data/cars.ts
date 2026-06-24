@@ -1,7 +1,7 @@
-import { SingleCarDTO } from '@/general-dtos';
+import { CarDTO } from '@/cars/dto';
 
 export class CarsDB {
-  public static cars: SingleCarDTO[] = [
+  public static cars: CarDTO[] = [
     {
       uuid: 'b749f1ee-1f07-418c-8928-5d4b331eac17',
       brand: 'Chevrolet',

@@ -12,21 +12,20 @@ import {
 } from '@nestjs/common';
 
 import { CarService } from '@/cars/cars.service';
-import { CreateCarDTO, UpdateCarDTO } from '@/cars/dto';
-import { SingleCarDTO } from '@/general-dtos';
+import { CarDTO, CreateCarDTO, UpdateCarDTO } from '@/cars/dto';
 
 @Controller('cars')
 export class CarsController {
   constructor(private readonly carService: CarService) {}
 
   @Get()
-  getAllCars(): SingleCarDTO[] {
+  getAllCars(): CarDTO[] {
     return this.carService.findAll();
   }
 
   @Get('/:id')
-  findOneById(@Param('id', ParseUUIDPipe) incoming_uuid: string): SingleCarDTO {
-    const foundSingleCarInDB: SingleCarDTO | undefined = this.carService
+  findOneById(@Param('id', ParseUUIDPipe) incoming_uuid: string): CarDTO {
+    const foundSingleCarInDB: CarDTO | undefined = this.carService
       .findAll()
       .find((singleCardInDB) => singleCardInDB.uuid === incoming_uuid);
 
