@@ -5,34 +5,28 @@ import {
   Get,
   NotFoundException,
   Param,
-  ParseIntPipe,
   ParseUUIDPipe,
   Patch,
   Post,
   Put,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 
-import { CarService } from './cars.service';
-import type { SingleCarInterface } from '../interfaces';
-import { CreateCarDTO, UpdateCarDTO } from './dto';
-import { CarsDB } from '../data';
+import { CarService } from '@/cars/cars.service';
+import { CreateCarDTO, UpdateCarDTO } from '@/cars/dto';
+import { SingleCarDTO } from '@/general-dtos';
 
 @Controller('cars')
 export class CarsController {
   constructor(private readonly carService: CarService) {}
 
   @Get()
-  getAllCars(): SingleCarInterface[] {
+  getAllCars(): SingleCarDTO[] {
     return this.carService.findAll();
   }
 
   @Get('/:id')
-  findOneById(
-    @Param('id', ParseUUIDPipe) incoming_uuid: string,
-  ): SingleCarInterface {
-    const foundSingleCarInDB: SingleCarInterface | undefined = this.carService
+  findOneById(@Param('id', ParseUUIDPipe) incoming_uuid: string): SingleCarDTO {
+    const foundSingleCarInDB: SingleCarDTO | undefined = this.carService
       .findAll()
       .find((singleCardInDB) => singleCardInDB.uuid === incoming_uuid);
 
@@ -45,9 +39,7 @@ export class CarsController {
 
   @Post()
   createCar(@Body() newCarInfo: CreateCarDTO) {
-    return this.carService.createNewCar(
-      newCarInfo as unknown as SingleCarInterface,
-    );
+    return this.carService.createNewCar(newCarInfo);
   }
 
   @Patch(':carId')

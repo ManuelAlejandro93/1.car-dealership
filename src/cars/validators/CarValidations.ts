@@ -1,5 +1,5 @@
-import { SingleCarInterface } from '../../interfaces';
-import { CarsDB } from '../../data';
+import { SingleCarInterface } from '@/interfaces';
+import { CarsDB } from '@/data';
 
 export class CarValidations {
   private static carsDB = CarsDB.cars;

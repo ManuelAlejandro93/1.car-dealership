@@ -1,19 +1,18 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { SingleCarInterface } from '../interfaces';
-import { CarsDB } from '../data';
-import { UuidAdapter } from '../adapters';
-import { CarValidations } from './validators';
-import { UpdateCarDTO } from './dto';
+import { CarsDB } from '@/data';
+import { UuidAdapter } from '@/adapters';
+import { CarValidations } from '@/cars/validators';
+import { SingleCarDTO } from '@/general-dtos';
 
 @Injectable()
 export class CarService {
-  private _cars: SingleCarInterface[] = CarsDB.cars;
+  private _cars: SingleCarDTO[] = CarsDB.cars;
 
-  public findAll(): SingleCarInterface[] {
+  public findAll(): SingleCarDTO[] {
     return this._cars;
   }
 
-  public createNewCar(newCar: SingleCarInterface): SingleCarInterface {
+  public createNewCar(newCar: SingleCarDTO): SingleCarDTO {
     if (!newCar.uuid) {
       newCar.uuid = UuidAdapter.getANewUUID();
     }
@@ -28,15 +27,15 @@ export class CarService {
     }
   }
 
-  public updateCarData(newCar: SingleCarInterface) {
-    const newCarArray: SingleCarInterface[] = this._cars.map((singleCar) => {
+  public updateCarData(newCar: SingleCarDTO) {
+    const newCarArray: SingleCarDTO[] = this._cars.map((singleCar) => {
       if (singleCar.uuid === newCar.uuid) {
         return newCar;
       } else {
         singleCar;
       }
-    }) as SingleCarInterface[];
+    }) as SingleCarDTO[];
 
-    this._cars = newCarArray as SingleCarInterface[];
+    this._cars = newCarArray;
   }
 }
