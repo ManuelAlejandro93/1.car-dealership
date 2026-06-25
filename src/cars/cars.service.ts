@@ -40,11 +40,13 @@ export class CarService {
       if (singleCar.uuid === newCarForUpdating.uuid) {
         return newCarForUpdating;
       } else {
-        singleCar;
+        return singleCar;
       }
     }) as CarDTO[];
 
     this._cars = newCarArray;
+
+    console.log(newCarArray);
 
     return this._cars.find(
       (singleCar) => singleCar.uuid === newCarForUpdating.uuid,

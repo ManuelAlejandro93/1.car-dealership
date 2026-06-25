@@ -45,7 +45,7 @@ export class CarsController {
   updateCar(
     @Param('carId', ParseUUIDPipe) carId: string,
     @Body() updatedCarBody: UpdateCarDTO,
-  ): CarDTO {
+  ) {
     return this.carService.updateCarData(carId, updatedCarBody) as CarDTO;
   }
 
