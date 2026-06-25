@@ -55,10 +55,9 @@ export class CarsController {
   }
 
   @Delete(':carId')
-  deleteCar(@Param('carId', ParseUUIDPipe) carId: string) {
-    return {
-      status: 'a car has been deleted',
-      carId,
-    };
+  deleteCar(
+    @Param('carId', ParseUUIDPipe) carId: string,
+  ): string | { message: string } {
+    return { message: this.carService.deleteSingleCarInDB(carId) };
   }
 }

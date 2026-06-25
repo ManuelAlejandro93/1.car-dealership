@@ -1,8 +1,13 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CarsDB } from '@/data';
 import { UuidAdapter } from '@/adapters';
 import { CarValidations } from '@/cars/validators';
 import { CarDTO, CreateCarDTO, UpdateCarDTO } from '@/cars/dto';
+import { single } from 'rxjs';
 
 @Injectable()
 export class CarService {
@@ -75,4 +80,26 @@ export class CarService {
       uuid: carId,
     };
   }
+
+  public deleteSingleCarInDB = (cardID: string): string => {
+    const doesCarExitInDB = this.doesCarExist(cardID);
+
+    if (doesCarExitInDB) {
+      const newCarArray: CarDTO[] = this._cars.filter(
+        (singleCar) => singleCar.uuid !== cardID,
+      );
+      this._cars = newCarArray;
+
+      return `Car with uuid ${cardID} DELETED`;
+    } else {
+      throw new NotFoundException(`Car with uuid ${cardID} does NOT exist`);
+    }
+  };
+
+  private doesCarExist = (cardID: string) => {
+    const doesCarExist: boolean = this._cars.some(
+      (singleCar) => singleCar.uuid === cardID,
+    );
+    return doesCarExist;
+  };
 }
