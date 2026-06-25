@@ -1,2 +1,2 @@
-import { CarDTO } from '@/cars/dto';
+import { CarDTO } from './Car-dto';
 export class CreateCarDTO extends CarDTO {}

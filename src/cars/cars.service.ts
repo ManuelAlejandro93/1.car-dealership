@@ -27,15 +27,50 @@ export class CarService {
     }
   }
 
-  public updateCarData(newCar: UpdateCarDTO) {
+  public updateCarData(
+    carId: string,
+    updatedCarBody: UpdateCarDTO,
+  ): CarDTO | undefined {
+    const newCarForUpdating: CarDTO = this.buildNewCarForUpdating(
+      carId,
+      updatedCarBody,
+    );
+
     const newCarArray: CarDTO[] = this._cars.map((singleCar) => {
-      if (singleCar.uuid === newCar.uuid) {
-        return newCar;
+      if (singleCar.uuid === newCarForUpdating.uuid) {
+        return newCarForUpdating;
       } else {
         singleCar;
       }
     }) as CarDTO[];
 
     this._cars = newCarArray;
+
+    return this._cars.find(
+      (singleCar) => singleCar.uuid === newCarForUpdating.uuid,
+    );
+  }
+
+  public buildNewCarForUpdating(
+    carId: string,
+    updatedCarBody: UpdateCarDTO,
+  ): CarDTO {
+    const newCarForUpdating: CarDTO = this.fixNewCarProperties(
+      carId,
+      updatedCarBody,
+    );
+
+    return newCarForUpdating;
+  }
+
+  public fixNewCarProperties(
+    carId: string,
+    updatedCarBody: UpdateCarDTO,
+  ): CarDTO {
+    return {
+      brand: updatedCarBody.brand ?? 'no brand was typed on updating process',
+      model: updatedCarBody.brand ?? 'no model was typed on updating process',
+      uuid: carId,
+    };
   }
 }

@@ -45,13 +45,8 @@ export class CarsController {
   updateCar(
     @Param('carId', ParseUUIDPipe) carId: string,
     @Body() updatedCarBody: UpdateCarDTO,
-  ) {
-    return {};
-
-    // this.carService.updateCarData(newUpdatedCar);
-    // return CarsDB.cars.find(
-    //   (singleCar) => singleCar.uuid === carId,
-    // ) as SingleCarInterface;
+  ): CarDTO {
+    return this.carService.updateCarData(carId, updatedCarBody) as CarDTO;
   }
 
   @Put(':carId')
