@@ -50,8 +50,14 @@ export class CarsController {
   }
 
   @Put(':carId')
-  replaceFullCar(@Param('carId', ParseUUIDPipe) carId: string) {
-    return { status: 'some car, has been completely modified.', carId };
+  replaceFullCar(
+    @Param('carId', ParseUUIDPipe) carId: string,
+    @Body() body: CarDTO,
+  ): { message: string; fullyUpdatedCar: CarDTO } {
+    return {
+      message: `Car with uuid ${carId} was complety updated`,
+      fullyUpdatedCar: this.carService.completeCarReplacement(carId, body),
+    };
   }
 
   @Delete(':carId')

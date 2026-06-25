@@ -7,7 +7,6 @@ import { CarsDB } from '@/data';
 import { UuidAdapter } from '@/adapters';
 import { CarValidations } from '@/cars/validators';
 import { CarDTO, CreateCarDTO, UpdateCarDTO } from '@/cars/dto';
-import { single } from 'rxjs';
 
 @Injectable()
 export class CarService {
@@ -51,8 +50,6 @@ export class CarService {
 
     this._cars = newCarArray;
 
-    console.log(newCarArray);
-
     return this._cars.find(
       (singleCar) => singleCar.uuid === newCarForUpdating.uuid,
     );
@@ -82,7 +79,7 @@ export class CarService {
   }
 
   public deleteSingleCarInDB = (cardID: string): string => {
-    const doesCarExitInDB = this.doesCarExist(cardID);
+    const doesCarExitInDB: boolean = this.doesCarExist(cardID);
 
     if (doesCarExitInDB) {
       const newCarArray: CarDTO[] = this._cars.filter(
@@ -96,10 +93,32 @@ export class CarService {
     }
   };
 
-  private doesCarExist = (cardID: string) => {
+  private doesCarExist = (cardID: string): boolean => {
     const doesCarExist: boolean = this._cars.some(
       (singleCar) => singleCar.uuid === cardID,
     );
     return doesCarExist;
+  };
+
+  public completeCarReplacement = (cardID: string, body: CarDTO): CarDTO => {
+    const doesCarExitInDB: boolean = this.doesCarExist(cardID);
+
+    if (!doesCarExitInDB) {
+      throw new NotFoundException(`Car with uuid ${cardID} does NOT exist`);
+    } else {
+      const newCarArray: CarDTO[] = this._cars.map((singleCar) => {
+        if (singleCar.uuid === cardID) {
+          return { ...body, uuid: cardID };
+        } else {
+          return singleCar;
+        }
+      }) as CarDTO[];
+
+      this._cars = newCarArray;
+
+      return this._cars.find(
+        (singleCar) => singleCar.uuid === cardID,
+      ) as CarDTO;
+    }
   };
 }

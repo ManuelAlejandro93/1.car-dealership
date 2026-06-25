@@ -19,6 +19,5 @@ export class CarDTO {
 
   @IsNotEmpty()
   @IsUUID('4')
-  @IsOptional()
   uuid: string;
 }
