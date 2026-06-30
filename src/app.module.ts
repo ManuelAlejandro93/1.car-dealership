@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CarsModule } from './cars';
-import { BrandsModule } from './brands/brands.module';
+import { BrandsModule } from '@/brands';
 
 @Module({
   controllers: [],
