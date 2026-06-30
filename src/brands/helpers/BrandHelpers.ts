@@ -18,15 +18,22 @@ export class BrandHelpers {
     return BrandHelpers._brandsDB;
   }
 
-  public static doesBrandExist = (brandID: string): boolean => {
+  public static doesBrandExistByID = (brandID: string): boolean => {
     const doesBrandExist: boolean = BrandHelpers.getBrandDB().some(
       (singleBrand) => singleBrand.id === brandID,
     );
     return doesBrandExist;
   };
 
+  public static doesBrandExistByName = (brandName: string): boolean => {
+    const doesBrandExist: boolean = BrandHelpers.getBrandDB().some(
+      (singleBrand) => singleBrand.name === brandName,
+    );
+    return doesBrandExist;
+  };
+
   public static findOneBrand = (brandName: string): BrandEntity => {
-    const doesBrandExistInDB = BrandHelpers.doesBrandExist(brandName);
+    const doesBrandExistInDB = BrandHelpers.doesBrandExistByID(brandName);
 
     if (doesBrandExistInDB) {
       const brandInDB = BrandHelpers.getBrandDB().find(
@@ -43,7 +50,7 @@ export class BrandHelpers {
     brandID: string,
     updateBrandDto: UpdateBrandDto,
   ): BrandEntity => {
-    const doesBrandExistInDB = BrandHelpers.doesBrandExist(brandID);
+    const doesBrandExistInDB = BrandHelpers.doesBrandExistByID(brandID);
 
     if (doesBrandExistInDB) {
       const newBrandArray: BrandEntity[] = BrandHelpers.getBrandDB().map(
@@ -78,7 +85,7 @@ export class BrandHelpers {
       createdAt: DateAdapter.getNow(),
     };
 
-    const doesBrandExistInDB = BrandHelpers.doesBrandExist(
+    const doesBrandExistInDB = BrandHelpers.doesBrandExistByName(
       createBrandDto.name ?? '',
     );
 
