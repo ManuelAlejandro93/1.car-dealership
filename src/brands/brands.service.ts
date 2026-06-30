@@ -1,8 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { CreateBrandDto, UpdateBrandDto } from '@/brands';
+import { Brand as BrandEntity, CreateBrandDto, UpdateBrandDto } from '@/brands';
+import { BrandsDB } from '@/data';
 
 @Injectable()
 export class BrandsService {
+  private _brandsDB: BrandEntity[] = BrandsDB.brands;
+
+  public get brandsDB(): BrandEntity[] {
+    return this._brandsDB;
+  }
+  public set brandsDB(value: BrandEntity[]) {
+    this._brandsDB = value;
+  }
+
   create(createBrandDto: CreateBrandDto) {
     return 'This action adds a new brand';
   }
