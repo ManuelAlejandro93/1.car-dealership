@@ -1,22 +1,22 @@
 import { Brand as BrandEntity } from '@/brands'; //Brand Entity
-import { UuidAdapter } from '@/adapters';
+import { UuidAdapter, DateAdapter } from '@/adapters';
 
 export class BrandsDB {
   public static brands: BrandEntity[] = [
     {
       id: UuidAdapter.getANewUUID(),
       name: 'mazda',
-      createdAt: 1,
+      createdAt: DateAdapter.getNow(),
     },
     {
       id: UuidAdapter.getANewUUID(),
       name: 'chevrolet',
-      createdAt: 2,
+      createdAt: DateAdapter.getNow(),
     },
     {
       id: UuidAdapter.getANewUUID(),
       name: 'suzuki',
-      createdAt: 3,
+      createdAt: DateAdapter.getNow(),
     },
   ];
 }

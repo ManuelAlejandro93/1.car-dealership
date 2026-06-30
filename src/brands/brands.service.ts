@@ -1,28 +1,28 @@
-import { Injectable } from '@nestjs/common';
-import { Brand as BrandEntity, CreateBrandDto, UpdateBrandDto } from '@/brands';
-import { BrandsDB } from '@/data';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Brand as BrandEntity,
+  CreateBrandDto,
+  UpdateBrandDto,
+  BrandHelpers,
+} from '@/brands';
 
 @Injectable()
 export class BrandsService {
-  private _brandsDB: BrandEntity[] = BrandsDB.brands;
-
-  public get brandsDB(): BrandEntity[] {
-    return this._brandsDB;
-  }
-  public set brandsDB(value: BrandEntity[]) {
-    this._brandsDB = value;
-  }
-
   create(createBrandDto: CreateBrandDto) {
     return 'This action adds a new brand';
   }
 
-  findAll() {
-    return `This action returns all brands`;
+  findAll(): BrandEntity[] {
+    return BrandHelpers.getBrandDB();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} brand`;
+  findOne(id: string): BrandEntity {
+    try {
+      const brandInDB: BrandEntity = BrandHelpers.findOneBrand(id);
+      return brandInDB;
+    } catch (error) {
+      throw new NotFoundException(`Brand with id: ${id} does not exist`);
+    }
   }
 
   update(id: number, updateBrandDto: UpdateBrandDto) {
