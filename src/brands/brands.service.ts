@@ -50,7 +50,13 @@ export class BrandsService {
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} brand`;
+  remove(id: string): { message: string } {
+    try {
+      const deletingProcessResponse: { message: string } =
+        BrandHelpers.deleteBrandByID(id);
+      return deletingProcessResponse;
+    } catch (error) {
+      throw new NotFoundException(`Brand with id: ${id} does not exist`);
+    }
   }
 }

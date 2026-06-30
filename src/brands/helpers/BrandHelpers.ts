@@ -1,10 +1,5 @@
 import { BrandsDB } from '@/data';
-import {
-  Brand,
-  Brand as BrandEntity,
-  CreateBrandDto,
-  UpdateBrandDto,
-} from '@/brands';
+import { Brand as BrandEntity, CreateBrandDto, UpdateBrandDto } from '@/brands';
 import { DateAdapter, UuidAdapter } from '@/adapters';
 
 export class BrandHelpers {
@@ -33,7 +28,7 @@ export class BrandHelpers {
   };
 
   public static findOneBrand = (brandName: string): BrandEntity => {
-    const doesBrandExistInDB = BrandHelpers.doesBrandExistByID(brandName);
+    const doesBrandExistInDB = BrandHelpers.doesBrandExistByName(brandName);
 
     if (doesBrandExistInDB) {
       const brandInDB = BrandHelpers.getBrandDB().find(
@@ -72,7 +67,7 @@ export class BrandHelpers {
 
       return BrandHelpers.getBrandDB().find(
         (singleBrand) => singleBrand.id === brandID,
-      ) as Brand;
+      ) as BrandEntity;
     } else {
       throw new Error();
     }
@@ -97,6 +92,23 @@ export class BrandHelpers {
       return BrandHelpers.getBrandDB().find(
         (singleBrand) => singleBrand.id === newBrand.id,
       );
+    }
+  }
+
+  public static deleteBrandByID(brandID: string): { message: string } {
+    const doesBrandExistInDB = BrandHelpers.doesBrandExistByID(brandID ?? '');
+
+    if (!doesBrandExistInDB) {
+      throw new Error();
+    } else {
+      const newBrandArray: BrandEntity[] = BrandHelpers.getBrandDB().filter(
+        (singleBrand) => singleBrand.id !== brandID,
+      );
+
+      BrandHelpers.setBrandsDB(newBrandArray);
+      return {
+        message: `Brand with id: ${brandID} was deleted`,
+      };
     }
   }
 }
