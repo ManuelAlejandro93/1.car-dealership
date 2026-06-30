@@ -31,8 +31,16 @@ export class BrandsService {
     }
   }
 
-  update(id: number, updateBrandDto: UpdateBrandDto) {
-    return `This action updates a #${id} brand`;
+  update(id: string, updateBrandDto: UpdateBrandDto): BrandEntity {
+    try {
+      const newBrandInDB: BrandEntity = BrandHelpers.updateOneBrand(
+        id,
+        updateBrandDto,
+      );
+      return newBrandInDB;
+    } catch (error) {
+      throw new NotFoundException(`Brand with id: ${id} does not exist`);
+    }
   }
 
   remove(id: number) {
