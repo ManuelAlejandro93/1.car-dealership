@@ -1,9 +1,7 @@
 import {
+  ConflictException,
   Injectable,
   NotFoundException,
-  Param,
-  ParseUUIDPipe,
-  UsePipes,
 } from '@nestjs/common';
 import {
   Brand as BrandEntity,
@@ -15,19 +13,28 @@ import {
 @Injectable()
 export class BrandsService {
   create(createBrandDto: CreateBrandDto) {
-    return 'This action adds a new brand';
+    try {
+      const brandInDB: BrandEntity = BrandHelpers.createNewBrand(
+        createBrandDto,
+      ) as BrandEntity;
+      return brandInDB;
+    } catch (error) {
+      throw new ConflictException(
+        `Brand with name: ${createBrandDto.name} already exists`,
+      );
+    }
   }
 
   findAll(): BrandEntity[] {
     return BrandHelpers.getBrandDB();
   }
 
-  findOne(id: string): BrandEntity {
+  findOne(name: string): BrandEntity {
     try {
-      const brandInDB: BrandEntity = BrandHelpers.findOneBrand(id);
+      const brandInDB: BrandEntity = BrandHelpers.findOneBrand(name);
       return brandInDB;
     } catch (error) {
-      throw new NotFoundException(`Brand with id: ${id} does not exist`);
+      throw new NotFoundException(`Brand with id: ${name} does not exist`);
     }
   }
 

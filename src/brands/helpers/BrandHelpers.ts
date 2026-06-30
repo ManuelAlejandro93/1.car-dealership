@@ -1,6 +1,11 @@
 import { BrandsDB } from '@/data';
-import { Brand, Brand as BrandEntity, UpdateBrandDto } from '@/brands';
-import { DateAdapter } from '@/adapters';
+import {
+  Brand,
+  Brand as BrandEntity,
+  CreateBrandDto,
+  UpdateBrandDto,
+} from '@/brands';
+import { DateAdapter, UuidAdapter } from '@/adapters';
 
 export class BrandHelpers {
   private static _brandsDB: BrandEntity[] = BrandsDB.brands;
@@ -20,12 +25,12 @@ export class BrandHelpers {
     return doesBrandExist;
   };
 
-  public static findOneBrand = (brandID: string): BrandEntity => {
-    const doesBrandExistInDB = BrandHelpers.doesBrandExist(brandID);
+  public static findOneBrand = (brandName: string): BrandEntity => {
+    const doesBrandExistInDB = BrandHelpers.doesBrandExist(brandName);
 
     if (doesBrandExistInDB) {
       const brandInDB = BrandHelpers.getBrandDB().find(
-        (singleBrand) => singleBrand.id === brandID,
+        (singleBrand) => singleBrand.name === brandName,
       );
 
       return brandInDB as BrandEntity;
@@ -65,4 +70,26 @@ export class BrandHelpers {
       throw new Error();
     }
   };
+
+  public static createNewBrand(createBrandDto: CreateBrandDto) {
+    const newBrand: BrandEntity = {
+      id: UuidAdapter.getANewUUID(),
+      name: createBrandDto.name,
+      createdAt: DateAdapter.getNow(),
+    };
+
+    const doesBrandExistInDB = BrandHelpers.doesBrandExist(
+      createBrandDto.name ?? '',
+    );
+
+    if (doesBrandExistInDB) {
+      throw new Error();
+    } else {
+      BrandHelpers.getBrandDB().push(newBrand);
+
+      return BrandHelpers.getBrandDB().find(
+        (singleBrand) => singleBrand.id === newBrand.id,
+      );
+    }
+  }
 }
