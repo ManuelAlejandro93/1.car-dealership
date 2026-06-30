@@ -1,4 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  Param,
+  ParseUUIDPipe,
+  UsePipes,
+} from '@nestjs/common';
 import {
   Brand as BrandEntity,
   CreateBrandDto,
