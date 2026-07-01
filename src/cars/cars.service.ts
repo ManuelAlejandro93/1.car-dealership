@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CarsDB } from '@/data';
+import { CarsDB, carSeed } from '@/data';
 import { UuidAdapter } from '@/adapters';
 import { CarValidations } from '@/cars/validators';
 import { CarDTO, CreateCarDTO, UpdateCarDTO } from '@/cars/dto';
@@ -120,5 +120,9 @@ export class CarService {
         (singleCar) => singleCar.uuid === cardID,
       ) as CarDTO;
     }
+  };
+
+  public runCarSeed = (carSeed: CarDTO[]): void => {
+    this._cars = carSeed;
   };
 }

@@ -1,6 +1,7 @@
-import { BrandsDB } from '@/data';
+import { BrandsDB, brandSeed } from '@/data';
 import { Brand as BrandEntity, CreateBrandDto, UpdateBrandDto } from '@/brands';
 import { DateAdapter, UuidAdapter } from '@/adapters';
+import { BrandOnSeed } from '@/interfaces';
 
 export class BrandHelpers {
   private static _brandsDB: BrandEntity[] = BrandsDB.brands;
@@ -111,4 +112,8 @@ export class BrandHelpers {
       };
     }
   }
+
+  public static fillBrandsWithSeedData = (brandSeed: BrandOnSeed[]): void => {
+    BrandHelpers.setBrandsDB(brandSeed);
+  };
 }

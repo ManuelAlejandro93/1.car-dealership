@@ -9,6 +9,7 @@ import {
   UpdateBrandDto,
   BrandHelpers,
 } from '@/brands';
+import { BrandOnSeed } from '@/interfaces';
 
 @Injectable()
 export class BrandsService {
@@ -59,4 +60,8 @@ export class BrandsService {
       throw new NotFoundException(`Brand with id: ${id} does not exist`);
     }
   }
+
+  public runBrandSeed = (brandSeed: BrandOnSeed[]) => {
+    BrandHelpers.fillBrandsWithSeedData(brandSeed);
+  };
 }
