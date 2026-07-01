@@ -7,8 +7,8 @@ import { brandSeed, carSeed } from '@/data';
 @Injectable()
 export class SeedService {
   constructor(
-    private brandService: BrandsService,
-    private carService: CarService,
+    private readonly brandService: BrandsService,
+    private readonly carService: CarService,
   ) {}
   runSeed() {
     this.brandService.runBrandSeed(brandSeed);
